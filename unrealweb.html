@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pv games</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 500vh; /* More height for full scroll playback */
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    .video-section {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: #000;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      max-height: 100vh;
+      object-fit: cover;
+    }
+    .content {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Scroll Down to Play the Video</h1>
+  </div>
+
+  <div class="video-section">
+    <video id="scrollVideo" src="C:\Users\YATHARTH\Videos\Captures\bloodstrike.mp4" preload="auto" muted playsinline></video>
+  </div>
+
+  <div class="content">
+    <h1>End of Video</h1>
+  </div>
+
+  <script>
+    const video = document.getElementById('scrollVideo');
+    video.pause();
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollFraction = scrollTop / docHeight;
+      const videoDuration = video.duration || 1;
+      video.currentTime = videoDuration * scrollFraction;
+    });
+
+    video.addEventListener('loadedmetadata', () => {
+      // Ensure correct duration after metadata is loaded
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollFraction = scrollTop / docHeight;
+      video.currentTime = video.duration * scrollFraction;
+    });
+  </script>
+</body>
+</html>
